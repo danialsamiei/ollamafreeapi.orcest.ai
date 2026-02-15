@@ -10,9 +10,14 @@ authors = [
 ]
 description = "A lightweight client for interacting with LLMs served via Ollama"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8,<4.0"
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
