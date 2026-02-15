@@ -2,4 +2,4 @@ services:
   - type: web
     name: ollamafreeapi
     runtime: python
-    buildCommand: pip install -r requirements.txt && pip install .
+    buildCommand: pip install -r requirements.txt
