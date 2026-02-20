@@ -1,6 +1,17 @@
 services:
   - type: web
     name: ollamafreeapi
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SSO_ISSUER
+        value: https://login.orcest.ai
+      - key: SSO_CLIENT_ID
+        value: ollamafreeapi
+      - key: SSO_CLIENT_SECRET
+        sync: false  # must be set manually in Render dashboard
+      - key: SSO_CALLBACK_URL
+        value: https://ollamafreeapi.orcest.ai/auth/callback
+      - key: PORT
+        value: "10000"
+    healthCheckPath: /health
