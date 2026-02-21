@@ -20,11 +20,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# CORS for Orcide IDE
+# CORS for Orcide IDE and all origins (public free API)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://*.orcest.ai", "https://ide.orcest.ai"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
