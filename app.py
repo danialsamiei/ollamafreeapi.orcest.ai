@@ -2,7 +2,8 @@
 FastAPI server exposing OllamaFreeAPI as a web service.
 """
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional, List
@@ -14,6 +15,26 @@ app = FastAPI(
     description="Free API for open-source LLMs via Ollama",
     version="0.1.3",
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://*.orcest.ai", "https://orcest.ai"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Simple API key authentication
+OLLAMAFREE_API_KEY = os.getenv("OLLAMAFREE_API_KEY", "")
+
+
+def _check_auth(request: Request) -> bool:
+    if not OLLAMAFREE_API_KEY:
+        return True
+    auth = request.headers.get("Authorization", "")
+    if auth.startswith("Bearer "):
+        return auth[7:] == OLLAMAFREE_API_KEY
+    return False
 
 # Initialize client at startup
 api = OllamaFreeAPI()
