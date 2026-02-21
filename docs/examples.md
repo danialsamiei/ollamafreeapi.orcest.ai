@@ -46,15 +46,15 @@ print("Server info:", server_info)
 ```python
 # Simple chat with default parameters
 response = client.chat(
-    model_name="llama2",
-    prompt="What is the capital of France?"
+    prompt="What is the capital of France?",
+    model="llama2"
 )
 print("Response:", response)
 
 # Chat with custom parameters
 response = client.chat(
-    model_name="llama2",
     prompt="Write a short poem about programming",
+    model="llama2",
     temperature=0.8,
     top_p=0.95,
     num_predict=256
@@ -66,8 +66,8 @@ print("Response:", response)
 ```python
 # Stream the response
 for chunk in client.stream_chat(
-    model_name="llama2",
     prompt="Tell me a story about a robot",
+    model="llama2",
     temperature=0.7
 ):
     print(chunk, end="", flush=True)
@@ -77,7 +77,7 @@ for chunk in client.stream_chat(
 ```python
 # Generate a custom API request
 request = client.generate_api_request(
-    model_name="llama2",
+    model="llama2",
     prompt="Explain quantum computing",
     temperature=0.7,
     top_p=0.9,
@@ -98,7 +98,7 @@ except ValueError as e:
 
 try:
     # Try to chat with a model that has no available servers
-    response = client.chat("unavailable_model", "Hello")
+    response = client.chat(prompt="Hello", model="unavailable_model")
 except RuntimeError as e:
     print(f"Error: {e}")
 ```
@@ -110,34 +110,34 @@ from ollamafreeapi import OllamaFreeAPI
 def main():
     # Initialize client
     client = OllamaFreeAPI()
-    
+
     # List available models
     print("Available families:", client.list_families())
-    
+
     # Choose a model
-    model_name = "llama2"
-    
+    model = "llama2"
+
     # Get model information
     try:
-        model_info = client.get_model_info(model_name)
-        print(f"\nModel {model_name} info:", model_info)
-        
+        model_info = client.get_model_info(model)
+        print(f"\nModel {model} info:", model_info)
+
         # Get available servers
-        servers = client.get_model_servers(model_name)
-        print(f"\nAvailable servers for {model_name}:", servers)
-        
+        servers = client.get_model_servers(model)
+        print(f"\nAvailable servers for {model}:", servers)
+
         # Chat with the model
         prompt = "What are the three laws of robotics?"
         print(f"\nAsking: {prompt}")
-        
+
         response = client.chat(
-            model_name=model_name,
             prompt=prompt,
+            model=model,
             temperature=0.7,
             num_predict=256
         )
         print(f"\nResponse: {response}")
-        
+
     except (ValueError, RuntimeError) as e:
         print(f"Error occurred: {e}")
 
@@ -147,4 +147,4 @@ if __name__ == "__main__":
 
 These examples demonstrate the main features and common use cases of the OllamaFreeAPI client. Remember to handle exceptions appropriately in production code and adjust the parameters according to your specific needs.
 
-Note: The actual model names and server URLs in these examples are placeholders. You should use the actual model names and server URLs available in your environment. 
+Note: The actual model names and server URLs in these examples are placeholders. You should use the actual model names and server URLs available in your environment.

@@ -103,12 +103,12 @@ def get_server_info(self, model_name: str, server_url: Optional[str] = None) -> 
 
 ### generate_api_request
 ```python
-def generate_api_request(self, model_name: str, prompt: str, **kwargs) -> Dict:
+def generate_api_request(self, model: str, prompt: str, **kwargs) -> Dict:
     """
     Generate the JSON payload for an API request.
-    
+
     Args:
-        model_name: Name of the model to use
+        model: Name of the model to use
         prompt: The input prompt
         **kwargs: Additional model parameters:
             - temperature (default: 0.7)
@@ -119,7 +119,7 @@ def generate_api_request(self, model_name: str, prompt: str, **kwargs) -> Dict:
             - seed (optional)
             - tfs_z (optional)
             - mirostat (optional)
-            
+
     Returns:
         Dictionary representing the API request payload
     """
@@ -127,18 +127,18 @@ def generate_api_request(self, model_name: str, prompt: str, **kwargs) -> Dict:
 
 ### chat
 ```python
-def chat(self, model_name: str, prompt: str, **kwargs) -> str:
+def chat(self, prompt: str, model: Optional[str] = None, **kwargs) -> str:
     """
     Chat with a model using automatic server selection.
-    
+
     Args:
-        model_name: Name of the model to use
         prompt: The input prompt
+        model: Name of the model to use (optional, auto-selected if not given)
         **kwargs: Additional model parameters (same as generate_api_request)
-        
+
     Returns:
         The generated response text
-        
+
     Raises:
         RuntimeError: If no working server is found
     """
@@ -146,18 +146,18 @@ def chat(self, model_name: str, prompt: str, **kwargs) -> str:
 
 ### stream_chat
 ```python
-def stream_chat(self, model_name: str, prompt: str, **kwargs):
+def stream_chat(self, prompt: str, model: Optional[str] = None, **kwargs):
     """
     Stream chat response from a model.
-    
+
     Args:
-        model_name: Name of the model to use
         prompt: The input prompt
+        model: Name of the model to use (optional, auto-selected if not given)
         **kwargs: Additional model parameters (same as generate_api_request)
-        
+
     Yields:
         Response chunks as they are generated
-        
+
     Raises:
         RuntimeError: If no working server is found
     """
